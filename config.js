@@ -1,6 +1,5 @@
-// Paste your Supabase Project URL and anon (publishable) key below.
-// Until these are filled in, the app runs in Local Preview mode using localStorage.
+// Supabase Project URL and publishable key for Lades — KTH Basketball Team.
 window.LADES_CONFIG = {
-  SUPABASE_URL: 'YOUR_SUPABASE_URL',
-  SUPABASE_ANON_KEY: 'YOUR_SUPABASE_ANON_KEY',
+  SUPABASE_URL: 'https://fsisyqmybivsqmsjhxip.supabase.co',
+  SUPABASE_ANON_KEY: 'sb_publishable_fII2v8ZDPCRRUzYVUDCFIQ_gVfjGYS6',
 };
