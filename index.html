@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lades — KTH Basketball · Osqvik Christmas Party</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Mountains+of+Christmas:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="config.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <!-- Subtle Winter Snowfall Layer -->
+  <div class="snowfall" aria-hidden="true">
+    <span class="snowflake">❄</span>
+    <span class="snowflake">❄</span>
+    <span class="snowflake">❄</span>
+    <span class="snowflake">❄</span>
+    <span class="snowflake">❄</span>
+    <span class="snowflake">❄</span>
+    <span class="snowflake">❄</span>
+    <span class="snowflake">❄</span>
+    <span class="snowflake">❄</span>
+    <span class="snowflake">❄</span>
+    <span class="snowflake">❄</span>
+    <span class="snowflake">❄</span>
+    <span class="snowflake">❄</span>
+    <span class="snowflake">❄</span>
+  </div>
+
+  <main class="container">
+    <!-- Hero Header & Osqvik Countdown -->
+    <header class="hero">
+      <div class="fairy-lights" aria-hidden="true">
+        <span class="bulb bulb-red"></span>
+        <span class="bulb bulb-gold"></span>
+        <span class="bulb bulb-ice"></span>
+        <span class="bulb bulb-pine"></span>
+        <span class="bulb bulb-red"></span>
+        <span class="bulb bulb-gold"></span>
+        <span class="bulb bulb-ice"></span>
+        <span class="bulb bulb-pine"></span>
+        <span class="bulb bulb-red"></span>
+        <span class="bulb bulb-gold"></span>
+        <span class="bulb bulb-ice"></span>
+      </div>
+
+      <div class="hero-top">
+        <span class="team-badge">🏀 KTH BASKETBALL · 🎄 OSQVIK CHRISTMAS PARTY</span>
+      </div>
+
+      <div class="hero-title-lockup">
+        <img
+          src="assets/santa-ball.svg"
+          alt=""
+          class="hero-mascot"
+          width="54"
+          height="54"
+        />
+        <h1 class="hero-title">LADES</h1>
+      </div>
+
+      <p class="festive-tagline">Osqvik Christmas Party Edition · Dec 5th</p>
+      <p class="hero-subtitle">
+        Say <strong>"Aklımda!"</strong>, <strong>"On my mind!"</strong>, or gesture — don't get caught slipping!
+      </p>
+
+      <div class="countdown-banner" aria-label="Countdown to Osqvik punishment">
+        <div class="countdown-stakes">
+          Lowest score on <strong>Dec 5th</strong> takes the freezing lake plunge at the <strong>Osqvik Christmas Party</strong> 🥶❄️
+        </div>
+        <div class="countdown-grid" id="countdown-grid">
+          <div class="countdown-unit">
+            <span class="countdown-value" id="cd-days">--</span>
+            <span class="countdown-label">Days</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-value" id="cd-hours">--</span>
+            <span class="countdown-label">Hours</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-value" id="cd-mins">--</span>
+            <span class="countdown-label">Mins</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-value" id="cd-secs">--</span>
+            <span class="countdown-label">Secs</span>
+          </div>
+        </div>
+        <p class="countdown-expired hidden" id="countdown-expired">
+          Time's up! Head to Osqvik! ❄️
+        </p>
+      </div>
+    </header>
+
+    <!-- Log a Lades Card -->
+    <section class="card card-accent-orange" aria-labelledby="log-heading">
+      <h2 class="card-title" id="log-heading">🏀 Log a Lades</h2>
+      <form id="lades-form" novalidate>
+        <div class="field-group">
+          <div class="label-row">
+            <label for="winner-select">
+              Who are you? <span class="delta-pill delta-plus">+1</span>
+            </label>
+            <button
+              type="button"
+              class="btn-link"
+              id="winner-new-btn"
+              title="Add yourself as a new player"
+            >
+              + New
+            </button>
+          </div>
+          <select id="winner-select" name="winner">
+            <option value="">Select your name...</option>
+          </select>
+          <input
+            type="text"
+            id="winner-new-input"
+            class="new-player-input hidden"
+            maxlength="32"
+            placeholder="Enter your name..."
+            autocomplete="name"
+          />
+        </div>
+
+        <div class="field-group">
+          <div class="label-row">
+            <label for="loser-select">
+              Who did you Lades? <span class="delta-pill delta-minus">-1</span>
+            </label>
+            <button
+              type="button"
+              class="btn-link"
+              id="loser-new-btn"
+              title="Add a new teammate"
+            >
+              + New
+            </button>
+          </div>
+          <select id="loser-select" name="loser">
+            <option value="">Select teammate...</option>
+          </select>
+          <input
+            type="text"
+            id="loser-new-input"
+            class="new-player-input hidden"
+            maxlength="32"
+            placeholder="Enter teammate's name..."
+            autocomplete="off"
+          />
+        </div>
+
+        <p id="form-error" class="form-error hidden" role="alert"></p>
+
+        <button type="submit" class="btn-primary" id="submit-btn">
+          🏀 Log Lades (+1 / -1)
+        </button>
+      </form>
+    </section>
+
+    <!-- Scoreboard Card -->
+    <section class="card card-accent-blue" aria-labelledby="scoreboard-heading">
+      <div class="card-header-row">
+        <div class="card-title-group">
+          <h2 class="card-title" id="scoreboard-heading">🏆 Scoreboard</h2>
+          <span class="count-badge" id="player-count">0 players</span>
+        </div>
+        <div class="preview-controls">
+          <span class="preview-badge" id="mode-badge">Local Preview</span>
+          <button type="button" class="btn-subtle" id="reset-demo-btn">
+            Reset Demo
+          </button>
+        </div>
+      </div>
+
+      <ul class="scoreboard-list" id="scoreboard-list"></ul>
+    </section>
+
+    <!-- Recent Lades Card -->
+    <section class="card card-accent-pine" aria-labelledby="recent-heading">
+      <div class="card-header-row">
+        <h2 class="card-title" id="recent-heading">🎄 Recent Lades</h2>
+        <span class="muted-hint">Last 6</span>
+      </div>
+      <ul class="recent-list" id="recent-list"></ul>
+    </section>
+
+    <!-- Rules & Osqvik Punishment Card -->
+    <section class="card card-accent-festive" aria-labelledby="rules-heading">
+      <h2 class="card-title" id="rules-heading">📜 Official Rules &amp; Osqvik Punishment</h2>
+
+      <div class="rules-block">
+        <h3>How to Play Lades</h3>
+        <ul class="rules-list">
+          <li>
+            <strong>Voluntary Two-Hand Handoff:</strong> When handing something to a teammate, <strong>both hands must touch the object at the same time</strong> and the exchange must be <strong>voluntary by both parties</strong> — <strong>no throwing objects</strong> and <strong>no hiding the object</strong> in your hand.
+          </li>
+          <li>
+            <strong>Defend Yourself:</strong> Anytime you accept an object from a teammate, say <strong>"Aklımda!"</strong> or <strong>"On my mind!"</strong>, or make it clearly obvious with a <strong>gesture</strong> (like tapping your temple) that you have it on your mind.
+          </li>
+          <li>
+            <strong>Claim the Point:</strong> If they accept it without saying it or gesturing, yell <strong>"LADES!"</strong> and log it above right away — <strong>+1</strong> for you, <strong>-1</strong> for them.
+          </li>
+        </ul>
+      </div>
+
+      <div class="safe-zones-box">
+        <div class="safe-zones-title">⏸️ Official Game Pauses (Safe Zones)</div>
+        <ul class="safe-zones-list">
+          <li>
+            <strong>Wednesday &amp; Thursday Practices:</strong> The game pauses between the opening <strong>"KTH on 3!"</strong> huddle and the final <strong>"KTH on 3!"</strong> huddle.
+          </li>
+          <li>
+            <strong>Weekend Games:</strong> The game pauses the moment we <strong>enter the game court</strong> and resumes on the <strong>final whistle</strong>.
+          </li>
+        </ul>
+      </div>
+
+      <div class="referee-note">
+        <strong>⚖️ Rule Disputes &amp; Support:</strong> Any uncertainties or disagreements? Contact <strong>Atahan</strong> for support or the final verdict.
+      </div>
+
+      <div class="punishment-callout">
+        <img
+          src="assets/osqvik-plunge.svg"
+          alt="Frozen Osqvik lake dock with Christmas lights and a floating basketball in the ice hole"
+          class="punishment-img"
+        />
+        <div class="punishment-title">❄️ The Final Punishment: Osqvik Freezing Lake</div>
+        <p>
+          At our <strong>Osqvik Christmas Party on December 5th</strong>, whoever sits at the bottom of the scoreboard with the worst overall score gets thrown into the freezing lake. Ties don't save you — everyone tied for last place goes in!
+        </p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      🏀 KTH Basketball Team · 🎄 Osqvik Christmas Party · Lades 2026
+    </footer>
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden" role="status" aria-live="polite">
+    <span id="toast-message"></span>
+    <button type="button" id="toast-undo-btn" class="toast-undo">Undo</button>
+  </div>
+</body>
+</html>

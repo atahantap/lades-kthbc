@@ -1,0 +1,218 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560" role="img" aria-label="Osqvik snowy cabin, frozen lake, Christmas lights, and basketball hoop">
+  <defs>
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#001333"/>
+      <stop offset="50%" stop-color="#002F6C"/>
+      <stop offset="100%" stop-color="#0E5299"/>
+    </linearGradient>
+    <radialGradient id="auroraGlow" cx="68%" cy="28%" r="45%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.28"/>
+      <stop offset="60%" stop-color="#0EA5E9" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#002F6C" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FEF9C3" stop-opacity="0.95"/>
+      <stop offset="45%" stop-color="#FDE68A" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#FDE68A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="lakeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0B3B6E"/>
+      <stop offset="45%" stop-color="#07284E"/>
+      <stop offset="100%" stop-color="#03162E"/>
+    </linearGradient>
+    <linearGradient id="snowBankGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#CBD5E1"/>
+    </linearGradient>
+    <linearGradient id="cabinRed" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#991B1B"/>
+      <stop offset="100%" stop-color="#6B1010"/>
+    </linearGradient>
+    <radialGradient id="warmWindowGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FEF08A" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#F59E0B" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="bulbGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Night Sky -->
+  <rect width="1200" height="560" fill="url(#skyGrad)"/>
+  <rect width="1200" height="560" fill="url(#auroraGlow)"/>
+
+  <!-- Stars -->
+  <g fill="#E0F2FE" opacity="0.85">
+    <circle cx="95" cy="64" r="1.5"/>
+    <circle cx="180" cy="110" r="1.2"/>
+    <circle cx="255" cy="48" r="2"/>
+    <circle cx="340" cy="92" r="1.3"/>
+    <circle cx="445" cy="42" r="1.8"/>
+    <circle cx="560" cy="84" r="1.2"/>
+    <circle cx="670" cy="52" r="1.6"/>
+    <circle cx="790" cy="96" r="1.4"/>
+    <circle cx="885" cy="46" r="2"/>
+    <circle cx="1010" cy="115" r="1.3"/>
+    <circle cx="1115" cy="62" r="1.7"/>
+    <circle cx="1150" cy="140" r="1.2"/>
+  </g>
+
+  <!-- Moon -->
+  <circle cx="965" cy="115" r="56" fill="url(#moonGlow)"/>
+  <circle cx="965" cy="115" r="24" fill="#FEF3C7"/>
+  <circle cx="976" cy="109" r="21" fill="#053068"/>
+
+  <!-- Distant Archipelago Ridge -->
+  <path d="M0 325 Q180 280 390 315 T790 302 T1200 322 L1200 390 L0 390 Z" fill="#072B54"/>
+
+  <!-- Frozen Lake -->
+  <rect x="0" y="370" width="1200" height="190" fill="url(#lakeGrad)"/>
+  <!-- Moon shimmer on ice -->
+  <g fill="#BAE6FD" opacity="0.2">
+    <ellipse cx="965" cy="410" rx="54" ry="4"/>
+    <ellipse cx="955" cy="432" rx="70" ry="4.5"/>
+    <ellipse cx="972" cy="458" rx="45" ry="3.5"/>
+    <ellipse cx="960" cy="488" rx="85" ry="5"/>
+  </g>
+  <!-- Warm cabin reflection on ice -->
+  <g fill="#FBBF24" opacity="0.22">
+    <ellipse cx="260" cy="420" rx="44" ry="4"/>
+    <ellipse cx="290" cy="442" rx="56" ry="4"/>
+    <ellipse cx="255" cy="470" rx="34" ry="3"/>
+  </g>
+
+  <!-- Pine Trees (Left & Center) -->
+  <g id="pines-back">
+    <polygon points="60,372 105,215 150,372" fill="#0B3B2E"/>
+    <polygon points="78,290 105,215 132,290" fill="#E2E8F0"/>
+    <polygon points="120,374 162,240 204,374" fill="#0E4736"/>
+    <polygon points="138,300 162,240 186,300" fill="#E2E8F0"/>
+
+    <polygon points="440,372 485,205 530,372" fill="#0B3B2E"/>
+    <polygon points="460,280 485,205 510,280" fill="#E2E8F0"/>
+    <polygon points="510,372 552,238 594,372" fill="#11503D"/>
+    <polygon points="528,295 552,238 576,295" fill="#E2E8F0"/>
+
+    <polygon points="1030,372 1082,195 1134,372" fill="#0B3B2E"/>
+    <polygon points="1055,275 1082,195 1109,275" fill="#F1F5F9"/>
+    <polygon points="1105,375 1152,228 1198,375" fill="#0E4736"/>
+    <polygon points="1128,295 1152,228 1176,295" fill="#E2E8F0"/>
+  </g>
+
+  <!-- Snowy Shoreline -->
+  <path d="M0 362 Q160 342 360 360 T760 366 Q980 350 1200 364 L1200 398 Q960 385 680 396 T0 392 Z" fill="url(#snowBankGrad)"/>
+
+  <!-- Falun Red Swedish Osqvik Cabin -->
+  <g id="osqvik-cabin">
+    <!-- Chimney & Smoke -->
+    <rect x="332" y="198" width="24" height="58" fill="#475569"/>
+    <rect x="328" y="194" width="32" height="7" rx="2" fill="#F1F5F9"/>
+    <g fill="#CBD5E1" opacity="0.35">
+      <circle cx="348" cy="176" r="10"/>
+      <circle cx="362" cy="154" r="14"/>
+      <circle cx="382" cy="130" r="17"/>
+    </g>
+
+    <!-- Cabin Main Wall -->
+    <rect x="180" y="268" width="210" height="106" fill="url(#cabinRed)"/>
+    <!-- White Corner Trims (Classic Swedish Knutar) -->
+    <rect x="180" y="268" width="10" height="106" fill="#F8FAFC"/>
+    <rect x="380" y="268" width="10" height="106" fill="#F8FAFC"/>
+    <rect x="280" y="268" width="6" height="106" fill="#7F1D1D" opacity="0.45"/>
+
+    <!-- Pitched Roof + Snow -->
+    <polygon points="160,272 285,198 410,272" fill="#1E293B"/>
+    <path d="M155 272 L285 194 L415 272 L404 282 L285 212 L166 282 Z" fill="#F8FAFC"/>
+
+    <!-- Glowing Windows -->
+    <circle cx="232" cy="316" r="36" fill="url(#warmWindowGlow)"/>
+    <circle cx="336" cy="316" r="36" fill="url(#warmWindowGlow)"/>
+
+    <rect x="212" y="298" width="40" height="38" rx="3" fill="#FEF08A" stroke="#F8FAFC" stroke-width="4"/>
+    <line x1="232" y1="298" x2="232" y2="336" stroke="#92400E" stroke-width="2.5"/>
+    <line x1="212" y1="317" x2="252" y2="317" stroke="#92400E" stroke-width="2.5"/>
+
+    <rect x="316" y="298" width="40" height="38" rx="3" fill="#FEF08A" stroke="#F8FAFC" stroke-width="4"/>
+    <line x1="336" y1="298" x2="336" y2="336" stroke="#92400E" stroke-width="2.5"/>
+    <line x1="316" y1="317" x2="356" y2="317" stroke="#92400E" stroke-width="2.5"/>
+
+    <!-- Wooden Door + Wreath -->
+    <rect x="270" y="316" width="28" height="58" rx="2" fill="#451A03" stroke="#F8FAFC" stroke-width="3"/>
+    <circle cx="284" cy="336" r="8" fill="none" stroke="#16A34A" stroke-width="4"/>
+    <circle cx="284" cy="343" r="2.2" fill="#DC2626"/>
+  </g>
+
+  <!-- Wooden Dock extending into Frozen Lake -->
+  <g id="dock">
+    <rect x="650" y="395" width="12" height="54" fill="#451A03"/>
+    <rect x="765" y="405" width="12" height="62" fill="#451A03"/>
+    <rect x="880" y="415" width="14" height="72" fill="#451A03"/>
+    <polygon points="620,382 915,408 885,432 590,398" fill="#78350F"/>
+    <polygon points="622,380 912,405 904,412 614,387" fill="#E2E8F0" opacity="0.8"/>
+  </g>
+
+  <!-- Basketball Hoop by the Dock -->
+  <g id="basketball-hoop">
+    <!-- Pole -->
+    <rect x="822" y="205" width="12" height="190" rx="4" fill="#334155"/>
+    <rect x="780" y="205" width="54" height="10" rx="4" fill="#334155"/>
+    <!-- Backboard -->
+    <rect x="720" y="160" width="96" height="64" rx="5" fill="rgba(248, 250, 252, 0.22)" stroke="#F8FAFC" stroke-width="4"/>
+    <rect x="750" y="186" width="36" height="28" fill="none" stroke="#EA580C" stroke-width="3"/>
+    <!-- Snow cap on backboard -->
+    <path d="M720 162 Q768 152 816 162 L816 167 L720 167 Z" fill="#F8FAFC"/>
+    <!-- Rim & Net -->
+    <rect x="752" y="212" width="32" height="5" rx="2.5" fill="#EA580C"/>
+    <path d="M754 217 L760 245 L776 245 L782 217" fill="none" stroke="#F8FAFC" stroke-width="2.2"/>
+    <line x1="762" y1="217" x2="765" y2="245" stroke="#F8FAFC" stroke-width="1.6"/>
+    <line x1="774" y1="217" x2="771" y2="245" stroke="#F8FAFC" stroke-width="1.6"/>
+  </g>
+
+  <!-- Orange Basketball with Santa Hat on Snow -->
+  <g transform="translate(650, 355)">
+    <circle cx="0" cy="0" r="19" fill="#EA580C" stroke="#7C2D12" stroke-width="2"/>
+    <path d="M-19 0 Q0 -6 19 0" fill="none" stroke="#7C2D12" stroke-width="1.8"/>
+    <path d="M0 -19 Q-6 0 0 19" fill="none" stroke="#7C2D12" stroke-width="1.8"/>
+    <!-- Mini Santa Hat -->
+    <path d="M-14 -13 L2 -33 L16 -12 Z" fill="#DC2626"/>
+    <rect x="-16" y="-16" width="32" height="7" rx="3.5" fill="#FFFFFF"/>
+    <circle cx="3" cy="-34" r="5" fill="#FFFFFF"/>
+  </g>
+
+  <!-- String of Warm Christmas Fairy Lights across the Pines -->
+  <g id="string-lights">
+    <path d="M162 246 Q320 296 485 224 Q640 280 780 212" fill="none" stroke="#1E293B" stroke-width="2"/>
+    <g filter="url(#bulbGlow)">
+      <circle cx="205" cy="260" r="4.5" fill="#FBBF24"/>
+      <circle cx="255" cy="272" r="4.5" fill="#EF4444"/>
+      <circle cx="308" cy="275" r="4.5" fill="#38BDF8"/>
+      <circle cx="362" cy="267" r="4.5" fill="#FBBF24"/>
+      <circle cx="418" cy="252" r="4.5" fill="#22C55E"/>
+      <circle cx="485" cy="226" r="4.5" fill="#FBBF24"/>
+      <circle cx="545" cy="245" r="4.5" fill="#EF4444"/>
+      <circle cx="608" cy="255" r="4.5" fill="#FBBF24"/>
+      <circle cx="668" cy="250" r="4.5" fill="#38BDF8"/>
+      <circle cx="725" cy="234" r="4.5" fill="#22C55E"/>
+    </g>
+  </g>
+
+  <!-- Drifting Snowflakes -->
+  <g fill="#FFFFFF" opacity="0.65">
+    <circle cx="140" cy="170" r="2.5"/>
+    <circle cx="290" cy="120" r="2"/>
+    <circle cx="410" cy="185" r="3"/>
+    <circle cx="520" cy="145" r="2.2"/>
+    <circle cx="640" cy="175" r="2.8"/>
+    <circle cx="755" cy="110" r="2"/>
+    <circle cx="870" cy="190" r="2.6"/>
+    <circle cx="1040" cy="175" r="2.4"/>
+    <circle cx="115" cy="310" r="2"/>
+    <circle cx="595" cy="325" r="2.5"/>
+    <circle cx="940" cy="320" r="2.2"/>
+  </g>
+</svg>

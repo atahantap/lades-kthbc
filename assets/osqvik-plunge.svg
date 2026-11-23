@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 360" width="960" height="360" role="img" aria-label="Frozen Osqvik lake dock, ice swimming hole, and floating basketball">
+  <defs>
+    <linearGradient id="plungeSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#072448"/>
+      <stop offset="100%" stop-color="#1E5B94"/>
+    </linearGradient>
+    <linearGradient id="iceSheet" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#BAE6FD"/>
+      <stop offset="50%" stop-color="#E0F2FE"/>
+      <stop offset="100%" stop-color="#93C5FD"/>
+    </linearGradient>
+    <radialGradient id="iceHoleGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#03152A"/>
+      <stop offset="70%" stop-color="#082F49"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </radialGradient>
+    <radialGradient id="saunaGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FDE047" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Winter Sky -->
+  <rect width="960" height="205" fill="url(#plungeSky)"/>
+
+  <!-- Stars -->
+  <g fill="#E0F2FE" opacity="0.8">
+    <circle cx="110" cy="40" r="1.5"/>
+    <circle cx="240" cy="70" r="1.2"/>
+    <circle cx="380" cy="34" r="1.8"/>
+    <circle cx="520" cy="60" r="1.4"/>
+    <circle cx="670" cy="42" r="2"/>
+    <circle cx="820" cy="75" r="1.5"/>
+    <circle cx="905" cy="35" r="1.4"/>
+  </g>
+
+  <!-- Distant Snowy Shoreline & Pines -->
+  <path d="M0 175 Q220 138 480 165 T960 155 L960 210 L0 210 Z" fill="#0C355E"/>
+  <g fill="#0E4736">
+    <polygon points="30,195 62,102 94,195"/>
+    <polygon points="75,195 104,116 133,195"/>
+    <polygon points="810,195 846,96 882,195"/>
+    <polygon points="865,195 896,118 927,195"/>
+  </g>
+  <g fill="#F1F5F9">
+    <polygon points="46,148 62,102 78,148"/>
+    <polygon points="828,144 846,96 864,144"/>
+  </g>
+
+  <!-- Warm Osqvik Sauna / Cabin on Left Shore -->
+  <rect x="132" y="138" width="96" height="58" fill="#991B1B"/>
+  <polygon points="122,140 180,104 238,140" fill="#F8FAFC"/>
+  <circle cx="180" cy="166" r="28" fill="url(#saunaGlow)"/>
+  <rect x="166" y="152" width="28" height="24" rx="2" fill="#FEF08A" stroke="#F8FAFC" stroke-width="2.5"/>
+
+  <!-- Frozen Ice Surface -->
+  <rect x="0" y="195" width="960" height="165" fill="url(#iceSheet)"/>
+  <line x1="0" y1="196" x2="960" y2="196" stroke="#FFFFFF" stroke-width="3" opacity="0.8"/>
+
+  <!-- Wooden Dock from Left to Center -->
+  <g>
+    <rect x="255" y="218" width="12" height="44" fill="#451A03"/>
+    <rect x="375" y="224" width="12" height="48" fill="#451A03"/>
+    <polygon points="150,204 420,218 402,246 125,226" fill="#78350F"/>
+    <!-- Dock Posts + Festive Lights -->
+    <rect x="260" y="176" width="8" height="36" fill="#451A03"/>
+    <rect x="385" y="182" width="8" height="38" fill="#451A03"/>
+    <path d="M264 182 Q324 198 389 188" fill="none" stroke="#1E293B" stroke-width="2"/>
+    <circle cx="290" cy="189" r="4" fill="#FBBF24"/>
+    <circle cx="325" cy="193" r="4" fill="#EF4444"/>
+    <circle cx="360" cy="191" r="4" fill="#38BDF8"/>
+  </g>
+
+  <!-- Ice-Swimming Hole Cut in Lake -->
+  <ellipse cx="620" cy="274" rx="145" ry="52" fill="#FFFFFF" opacity="0.9"/>
+  <ellipse cx="620" cy="276" rx="132" ry="44" fill="url(#iceHoleGrad)" stroke="#38BDF8" stroke-width="3"/>
+
+  <!-- Freezing Water Ripples -->
+  <ellipse cx="620" cy="278" rx="95" ry="28" fill="none" stroke="#7DD3FC" stroke-width="1.8" opacity="0.55"/>
+  <ellipse cx="620" cy="278" rx="58" ry="17" fill="none" stroke="#BAE6FD" stroke-width="1.8" opacity="0.65"/>
+
+  <!-- Floating Basketball in the Freezing Hole -->
+  <g transform="translate(620, 266)">
+    <circle cx="0" cy="0" r="24" fill="#EA580C" stroke="#7C2D12" stroke-width="2.2"/>
+    <path d="M-24 0 Q0 -8 24 0" fill="none" stroke="#7C2D12" stroke-width="2"/>
+    <path d="M0 -24 Q-8 0 0 24" fill="none" stroke="#7C2D12" stroke-width="2"/>
+    <!-- Frosty Snow Cap on Ball -->
+    <path d="M-16 -14 Q0 -25 16 -14 Q6 -11 -16 -14 Z" fill="#F8FAFC"/>
+  </g>
+  <!-- Waterline Clip Mask Illusion -->
+  <path d="M585 280 Q620 288 655 280" fill="none" stroke="#7DD3FC" stroke-width="3"/>
+
+  <!-- Ice Chunks Around Edge -->
+  <polygon points="468,288 492,276 502,292 478,298" fill="#E0F2FE" stroke="#7DD3FC" stroke-width="1.5"/>
+  <polygon points="745,254 772,248 780,264 752,268" fill="#E0F2FE" stroke="#7DD3FC" stroke-width="1.5"/>
+
+  <!-- Snowflakes -->
+  <g fill="#FFFFFF" opacity="0.75">
+    <circle cx="290" cy="95" r="2.2"/>
+    <circle cx="450" cy="110" r="2.8"/>
+    <circle cx="590" cy="82" r="2"/>
+    <circle cx="725" cy="120" r="2.5"/>
+    <circle cx="840" cy="145" r="2"/>
+  </g>
+</svg>
