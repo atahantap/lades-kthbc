@@ -25,7 +25,11 @@ create table if not exists public.lades_events (
 create index if not exists lades_events_created_at_idx
   on public.lades_events (created_at desc);
 
--- 3. Row Level Security (open to anyone with the team link)
+-- 3. Schema & table permissions + Row Level Security (open to anyone with the team link)
+grant usage on schema public to anon, authenticated;
+grant select, insert on table public.players to anon, authenticated;
+grant select, insert, delete on table public.lades_events to anon, authenticated;
+
 alter table public.players enable row level security;
 alter table public.lades_events enable row level security;
 
