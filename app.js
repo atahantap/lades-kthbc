@@ -56,12 +56,25 @@
         if (!Array.isArray(parsed.players) || !Array.isArray(parsed.events)) {
           throw new Error('Invalid state');
         }
-        return parsed;
+        return {
+          players: parsed.players,
+          events: parsed.events.filter((e) => !e.deletedAt),
+        };
       } catch {
         const seed = createSeedState();
         localStorage.setItem(STORAGE_KEY, JSON.stringify(seed));
         return seed;
       }
+    },
+
+    _readRawState() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        const seed = createSeedState();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(seed));
+        return seed;
+      }
+      return JSON.parse(raw);
     },
 
     _saveState(state) {
@@ -70,7 +83,7 @@
 
     async findOrCreatePlayer(rawName) {
       const cleanName = normalizeName(rawName);
-      const state = await this.getState();
+      const state = this._readRawState();
       const existing = state.players.find(
         (p) => p.name.toLowerCase() === cleanName.toLowerCase()
       );
@@ -84,21 +97,26 @@
     },
 
     async logLades(winnerId, loserId) {
-      const state = await this.getState();
+      const state = this._readRawState();
       const event = {
         id: makeId('e'),
         winnerId,
         loserId,
         createdAt: new Date().toISOString(),
+        deletedAt: null,
       };
       state.events.unshift(event);
       this._saveState(state);
       return event;
     },
 
-    async removeEvent(eventId) {
-      const state = await this.getState();
-      state.events = state.events.filter((e) => e.id !== eventId);
+    async undoRecentEvent(eventId) {
+      const state = this._readRawState();
+      const target = state.events.find((e) => e.id === eventId && !e.deletedAt);
+      if (!target) {
+        throw new Error('Undo window expired. Contact Atahan to edit older scores.');
+      }
+      target.deletedAt = new Date().toISOString();
       this._saveState(state);
     },
 
@@ -124,6 +142,7 @@
           client
             .from('lades_events')
             .select('id, winner_id, loser_id, created_at')
+            .is('deleted_at', null)
             .order('created_at', { ascending: false }),
         ]);
 
@@ -201,10 +220,15 @@
         };
       },
 
-      async removeEvent(eventId) {
-        const { error } = await client.from('lades_events').delete().eq('id', eventId);
+      async undoRecentEvent(eventId) {
+        const { data, error } = await client.rpc('undo_recent_lades', {
+          p_event_id: eventId,
+        });
         if (error) {
           throw new Error(`Could not undo Lades: ${error.message}`);
+        }
+        if (!data) {
+          throw new Error('Undo window expired. Contact Atahan to edit older scores.');
         }
       },
 
@@ -501,9 +525,6 @@
           <strong>${escapeHtml(winnerName)}</strong> got <strong>${escapeHtml(loserName)}</strong>
           <span class="recent-time">· ${formatRelativeTime(ev.createdAt)}</span>
         </span>
-        <button type="button" class="btn-undo-small" data-event-id="${escapeHtml(ev.id)}">
-          Undo
-        </button>
       `;
       recentList.appendChild(li);
     }
@@ -544,7 +565,7 @@
     toastTimer = setTimeout(() => {
       toastEl.classList.add('hidden');
       lastLoggedEventId = null;
-    }, 6000);
+    }, 10000);
   }
 
   async function resolvePlayerSelection(selectEl, inputEl, roleLabel) {
@@ -648,30 +669,13 @@
     }
   });
 
-  recentList.addEventListener('click', async (e) => {
-    const btn = e.target.closest('.btn-undo-small');
-    if (!btn || btn.disabled) return;
-    const eventId = btn.getAttribute('data-event-id');
-    if (!eventId) return;
-
-    btn.disabled = true;
-    try {
-      await Store.removeEvent(eventId);
-      await renderAll();
-      showToast('Lades entry undone.', null);
-    } catch (err) {
-      btn.disabled = false;
-      showError(err.message || 'Could not undo Lades entry.');
-    }
-  });
-
   toastUndoBtn.addEventListener('click', async () => {
     if (!lastLoggedEventId) return;
-    const idToRemove = lastLoggedEventId;
+    const idToUndo = lastLoggedEventId;
     lastLoggedEventId = null;
     toastEl.classList.add('hidden');
     try {
-      await Store.removeEvent(idToRemove);
+      await Store.undoRecentEvent(idToUndo);
       await renderAll();
       showToast('Lades entry undone.', null);
     } catch (err) {

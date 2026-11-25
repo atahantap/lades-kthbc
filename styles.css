@@ -735,24 +735,6 @@ input[type="text"]:focus {
   margin-left: 4px;
 }
 
-.btn-undo-small {
-  flex-shrink: 0;
-  background: #FFFFFF;
-  border: 1px solid var(--border);
-  color: var(--muted);
-  border-radius: 7px;
-  padding: 5px 10px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.btn-undo-small:hover {
-  color: var(--neg-text);
-  border-color: #FECACA;
-  background: #FEF2F2;
-}
-
 /* Rules, Safe Zones, Referee & Punishment */
 .rules-block h3 {
   font-size: 1rem;
