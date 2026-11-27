@@ -14,19 +14,24 @@ create table if not exists public.players (
 create unique index if not exists players_name_lower_idx
   on public.players (lower(trim(name)));
 
--- 2. Lades events table (+1 winner, -1 loser, soft-delete via deleted_at)
+-- 2. Lades events table (+1 winner, -1 loser, optional note, soft-delete via deleted_at)
 create table if not exists public.lades_events (
   id uuid primary key default gen_random_uuid(),
   winner_id uuid not null references public.players(id) on delete cascade,
   loser_id uuid not null references public.players(id) on delete cascade,
+  note text default null check (note is null or char_length(trim(note)) <= 140),
   created_at timestamptz not null default now(),
   deleted_at timestamptz default null,
   constraint no_self_lades check (winner_id <> loser_id)
 );
 
--- Ensure deleted_at exists when upgrading an already-created table
+-- Ensure deleted_at and note exist when upgrading an already-created table
 alter table public.lades_events
   add column if not exists deleted_at timestamptz default null;
+
+alter table public.lades_events
+  add column if not exists note text default null
+  check (note is null or char_length(trim(note)) <= 140);
 
 create index if not exists lades_events_created_at_idx
   on public.lades_events (created_at desc);
@@ -69,7 +74,11 @@ drop policy if exists "Public insert events" on public.lades_events;
 create policy "Public insert events"
   on public.lades_events for insert
   to anon, authenticated
-  with check (winner_id <> loser_id and deleted_at is null);
+  with check (
+    winner_id <> loser_id
+    and deleted_at is null
+    and (note is null or char_length(trim(note)) <= 140)
+  );
 
 drop policy if exists "Public delete events" on public.lades_events;
 

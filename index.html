@@ -157,6 +157,22 @@
           />
         </div>
 
+        <div class="field-group">
+          <div class="label-row">
+            <label for="note-input">
+              How did you get them? <span class="optional-tag">Optional</span>
+            </label>
+          </div>
+          <input
+            type="text"
+            id="note-input"
+            name="note"
+            maxlength="140"
+            placeholder='e.g. "Gave him a beer at the bar"'
+            autocomplete="off"
+          />
+        </div>
+
         <p id="form-error" class="form-error hidden" role="alert"></p>
 
         <button type="submit" class="btn-primary" id="submit-btn">
@@ -187,9 +203,12 @@
     <section class="card card-accent-pine" aria-labelledby="recent-heading">
       <div class="card-header-row">
         <h2 class="card-title" id="recent-heading">🎄 Recent Lades</h2>
-        <span class="muted-hint">Last 6</span>
+        <span class="muted-hint" id="recent-hint">Last 6</span>
       </div>
       <ul class="recent-list" id="recent-list"></ul>
+      <button type="button" id="recent-toggle-btn" class="btn-expand hidden">
+        Show more
+      </button>
     </section>
 
     <!-- Rules & Osqvik Punishment Card -->

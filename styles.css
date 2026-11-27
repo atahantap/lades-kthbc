@@ -478,6 +478,15 @@ h2, h3 {
   background: var(--kth-blue-soft);
 }
 
+.optional-tag {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--zero-bg);
+  padding: 1px 7px;
+  border-radius: 999px;
+}
+
 select,
 input[type="text"] {
   width: 100%;
@@ -711,9 +720,9 @@ input[type="text"]:focus {
 
 .recent-item {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
   padding: 10px 12px;
   background: #F8FAFC;
   border: 1px solid var(--border);
@@ -733,6 +742,34 @@ input[type="text"]:focus {
   color: var(--muted);
   font-size: 0.8rem;
   margin-left: 4px;
+}
+
+.recent-note {
+  font-size: 0.84rem;
+  color: #475569;
+  line-height: 1.4;
+  padding-left: 2px;
+  word-break: break-word;
+}
+
+.btn-expand {
+  width: 100%;
+  margin-top: 10px;
+  min-height: 38px;
+  background: #F8FAFC;
+  color: var(--kth-blue);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-expand:hover {
+  background: var(--kth-blue-soft);
+  border-color: #BFDBFE;
 }
 
 /* Rules, Safe Zones, Referee & Punishment */

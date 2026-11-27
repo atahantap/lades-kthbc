@@ -20,11 +20,11 @@
         { id: 'p-oskar', name: 'Oskar' },
       ],
       events: [
-        { id: 'e-1', winnerId: 'p-kaan', loserId: 'p-erik', createdAt: mins(14) },
-        { id: 'e-2', winnerId: 'p-maja', loserId: 'p-oskar', createdAt: mins(55) },
-        { id: 'e-3', winnerId: 'p-kaan', loserId: 'p-oskar', createdAt: mins(180) },
-        { id: 'e-4', winnerId: 'p-lukas', loserId: 'p-filip', createdAt: mins(420) },
-        { id: 'e-5', winnerId: 'p-erik', loserId: 'p-filip', createdAt: mins(960) },
+        { id: 'e-1', winnerId: 'p-kaan', loserId: 'p-erik', note: 'Gave him a beer at the bar', createdAt: mins(14) },
+        { id: 'e-2', winnerId: 'p-maja', loserId: 'p-oskar', note: 'Handed over the gym keycard', createdAt: mins(55) },
+        { id: 'e-3', winnerId: 'p-kaan', loserId: 'p-oskar', note: null, createdAt: mins(180) },
+        { id: 'e-4', winnerId: 'p-lukas', loserId: 'p-filip', note: 'Passed him his phone right after practice', createdAt: mins(420) },
+        { id: 'e-5', winnerId: 'p-erik', loserId: 'p-filip', note: null, createdAt: mins(960) },
       ],
     };
   }
@@ -96,12 +96,13 @@
       return player;
     },
 
-    async logLades(winnerId, loserId) {
+    async logLades(winnerId, loserId, note) {
       const state = this._readRawState();
       const event = {
         id: makeId('e'),
         winnerId,
         loserId,
+        note: note || null,
         createdAt: new Date().toISOString(),
         deletedAt: null,
       };
@@ -141,7 +142,7 @@
           client.from('players').select('id, name').order('name', { ascending: true }),
           client
             .from('lades_events')
-            .select('id, winner_id, loser_id, created_at')
+            .select('id, winner_id, loser_id, created_at, note')
             .is('deleted_at', null)
             .order('created_at', { ascending: false }),
         ]);
@@ -161,6 +162,7 @@
           id: row.id,
           winnerId: row.winner_id,
           loserId: row.loser_id,
+          note: row.note || null,
           createdAt: row.created_at,
         }));
 
@@ -201,11 +203,15 @@
         return { id: data.id, name: data.name };
       },
 
-      async logLades(winnerId, loserId) {
+      async logLades(winnerId, loserId, note) {
         const { data, error } = await client
           .from('lades_events')
-          .insert({ winner_id: winnerId, loser_id: loserId })
-          .select('id, winner_id, loser_id, created_at')
+          .insert({
+            winner_id: winnerId,
+            loser_id: loserId,
+            note: note || null,
+          })
+          .select('id, winner_id, loser_id, created_at, note')
           .single();
 
         if (error) {
@@ -216,6 +222,7 @@
           id: data.id,
           winnerId: data.winner_id,
           loserId: data.loser_id,
+          note: data.note || null,
           createdAt: data.created_at,
         };
       },
@@ -253,6 +260,11 @@
   }
 
   function initStore() {
+    const forceDemo = new URLSearchParams(window.location.search).get('demo') === '1';
+    if (forceDemo) {
+      return LocalStore;
+    }
+
     const cfg = window.LADES_CONFIG || {};
     const url = typeof cfg.SUPABASE_URL === 'string' ? cfg.SUPABASE_URL.trim() : '';
     const key = typeof cfg.SUPABASE_ANON_KEY === 'string' ? cfg.SUPABASE_ANON_KEY.trim() : '';
@@ -354,6 +366,7 @@
   const loserSelect = document.getElementById('loser-select');
   const loserNewInput = document.getElementById('loser-new-input');
   const loserNewBtn = document.getElementById('loser-new-btn');
+  const noteInput = document.getElementById('note-input');
   const formError = document.getElementById('form-error');
   const submitBtn = document.getElementById('submit-btn');
 
@@ -361,6 +374,8 @@
   const modeBadge = document.getElementById('mode-badge');
   const scoreboardList = document.getElementById('scoreboard-list');
   const recentList = document.getElementById('recent-list');
+  const recentHint = document.getElementById('recent-hint');
+  const recentToggleBtn = document.getElementById('recent-toggle-btn');
   const resetDemoBtn = document.getElementById('reset-demo-btn');
 
   const toastEl = document.getElementById('toast');
@@ -370,6 +385,8 @@
   let toastTimer = null;
   let lastLoggedEventId = null;
   let cachedPlayers = [];
+  let cachedEvents = [];
+  let showAllRecent = false;
   let isSubmitting = false;
   let realtimeDebounce = null;
 
@@ -503,20 +520,35 @@
 
   function renderRecent(players, events) {
     const playerMap = new Map(players.map((p) => [p.id, p.name]));
-    const sortedEvents = [...events]
+    const recentPool = [...events]
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-      .slice(0, 6);
+      .slice(0, 30);
 
-    if (sortedEvents.length === 0) {
+    const visibleEvents = showAllRecent ? recentPool : recentPool.slice(0, 6);
+    recentHint.textContent = showAllRecent ? `Last ${recentPool.length}` : 'Last 6';
+
+    if (recentPool.length > 6) {
+      recentToggleBtn.classList.remove('hidden');
+      recentToggleBtn.textContent = showAllRecent
+        ? 'Show less'
+        : `Show more (${recentPool.length - 6} more)`;
+    } else {
+      recentToggleBtn.classList.add('hidden');
+    }
+
+    if (visibleEvents.length === 0) {
       recentList.innerHTML =
         '<li class="empty-state">No Lades logged yet. Stay sharp out there!</li>';
       return;
     }
 
     recentList.innerHTML = '';
-    for (const ev of sortedEvents) {
+    for (const ev of visibleEvents) {
       const winnerName = playerMap.get(ev.winnerId) || 'Unknown';
       const loserName = playerMap.get(ev.loserId) || 'Unknown';
+      const noteHtml = ev.note
+        ? `<div class="recent-note">“${escapeHtml(ev.note)}”</div>`
+        : '';
 
       const li = document.createElement('li');
       li.className = 'recent-item';
@@ -525,6 +557,7 @@
           <strong>${escapeHtml(winnerName)}</strong> got <strong>${escapeHtml(loserName)}</strong>
           <span class="recent-time">· ${formatRelativeTime(ev.createdAt)}</span>
         </span>
+        ${noteHtml}
       `;
       recentList.appendChild(li);
     }
@@ -534,6 +567,7 @@
     try {
       const state = await Store.getState();
       cachedPlayers = state.players;
+      cachedEvents = state.events;
 
       const savedMe = localStorage.getItem(ME_STORAGE_KEY) || '';
       const currentWinner = winnerSelect.value || savedMe;
@@ -648,13 +682,17 @@
         throw new Error("You can't Lades yourself! Pick a teammate.");
       }
 
-      const event = await Store.logLades(winner.id, loser.id);
+      const rawNote = noteInput.value.trim().replace(/\s+/g, ' ');
+      const note = rawNote ? rawNote.slice(0, 140) : null;
+
+      const event = await Store.logLades(winner.id, loser.id, note);
       localStorage.setItem(ME_STORAGE_KEY, winner.id);
 
       winnerSelect.value = winner.id;
       loserSelect.value = '';
       winnerNewInput.value = '';
       loserNewInput.value = '';
+      noteInput.value = '';
       syncNewPlayerInput(winnerSelect, winnerNewInput);
       syncNewPlayerInput(loserSelect, loserNewInput);
 
@@ -667,6 +705,11 @@
       submitBtn.disabled = false;
       submitBtn.textContent = originalBtnText;
     }
+  });
+
+  recentToggleBtn.addEventListener('click', () => {
+    showAllRecent = !showAllRecent;
+    renderRecent(cachedPlayers, cachedEvents);
   });
 
   toastUndoBtn.addEventListener('click', async () => {
