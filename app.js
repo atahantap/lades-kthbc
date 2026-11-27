@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const DEADLINE_ISO = '2026-12-05T23:59:59+01:00';
+  const DEADLINE_ISO = '2026-12-05T18:00:00+01:00';
   const STORAGE_KEY = 'kth_lades_demo_v1';
   const ME_STORAGE_KEY = 'kth_lades_me_v1';
   const NEW_PLAYER_OPTION = '__new__';
